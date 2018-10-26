@@ -354,9 +354,12 @@ function _buildSquel(flavour = null) {
 
     _formatTableName (item) {
       if (this.options.autoQuoteTableNames) {
-        const quoteChar = this.options.nameQuoteCharacter;
-
-        item = `${quoteChar}${item}${quoteChar}`;
+        let quoteChar = this.options.nameQuoteCharacter;
+        if (typeof quoteChar === 'string') {
+          quoteChar = { left: quoteChar, right: quoteChar };
+        }
+  
+        item = `${quoteChar.left}${item}${quoteChar.right}`;
       }
 
       return item;
@@ -366,8 +369,11 @@ function _buildSquel(flavour = null) {
     _formatFieldAlias (item) {
       if (this.options.autoQuoteAliasNames) {
         let quoteChar = this.options.fieldAliasQuoteCharacter;
+        if (typeof quoteChar === 'string') {
+          quoteChar = { left: quoteChar, right: quoteChar };
+        }
 
-        item = `${quoteChar}${item}${quoteChar}`;
+        item = `${quoteChar.left}${item}${quoteChar.right}`;
       }
 
       return item;
@@ -377,8 +383,11 @@ function _buildSquel(flavour = null) {
     _formatTableAlias (item) {
       if (this.options.autoQuoteAliasNames) {
         let quoteChar = this.options.tableAliasQuoteCharacter;
+        if (typeof quoteChar === 'string') {
+          quoteChar = { left: quoteChar, right: quoteChar };
+        }
 
-        item = `${quoteChar}${item}${quoteChar}`;
+        item = `${quoteChar.left}${item}${quoteChar.right}`;
       }
 
       return (this.options.useAsForTableAliasNames)
@@ -390,17 +399,20 @@ function _buildSquel(flavour = null) {
     _formatFieldName (item, formattingOptions = {}) {
       if (this.options.autoQuoteFieldNames) {
         let quoteChar = this.options.nameQuoteCharacter;
+        if (typeof quoteChar === 'string') {
+          quoteChar = { left: quoteChar, right: quoteChar };
+        }
 
         if (formattingOptions.ignorePeriodsForFieldNameQuotes) {
           // a.b.c -> `a.b.c`
-          item = `${quoteChar}${item}${quoteChar}`;
+          item = `${quoteChar.left}${item}${quoteChar.right}`;
         } else {
           // a.b.c -> `a`.`b`.`c`
           item = item
             .split('.')
             .map(function(v) {
               // treat '*' as special case (#79)
-              return ('*' === v ? v : `${quoteChar}${v}${quoteChar}`);
+              return ('*' === v ? v : `${quoteChar.left}${v}${quoteChar.right}`);
             })
             .join('.')
         }
