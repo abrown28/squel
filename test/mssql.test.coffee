@@ -144,7 +144,7 @@ test['MSSQL flavour'] =
       autoQuoteFieldNames: false
       autoQuoteAliasNames: false
       useAsForTableAliasNames: false
-      nameQuoteCharacter: '`'
+      nameQuoteCharacter: {left: '[', right: ']'}
       tableAliasQuoteCharacter: '`'
       fieldAliasQuoteCharacter: '"'
       valueHandlers: []

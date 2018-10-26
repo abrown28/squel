@@ -5,13 +5,17 @@ squel.flavours['mssql'] = function(_squel) {
   cls.DefaultQueryBuilderOptions.autoQuoteAliasNames = false;
   cls.DefaultQueryBuilderOptions.numberedParametersPrefix = '@';
 
+  // cls.DefaultQueryBuilderOptions.autoQuoteTableNames = true;
+  // cls.DefaultQueryBuilderOptions.autoQuoteFieldNames = true;
+  cls.DefaultQueryBuilderOptions.nameQuoteCharacter = {left: '[', right: ']'};
+
 
   _squel.registerValueHandler(Date, function(date) {
     return `'${date.getUTCFullYear()}-${date.getUTCMonth()+1}-${date.getUTCDate()} ${date.getUTCHours()}:${date.getUTCMinutes()}:${date.getUTCSeconds()}'`;
   });
 
 
-  // LIMIT,  OFFSET x and TOP x
+  //ï¿½LIMIT,  OFFSET x and TOP x
   cls.MssqlLimitOffsetTopBlock = class extends cls.Block {
     constructor (options) {
       super(options);
